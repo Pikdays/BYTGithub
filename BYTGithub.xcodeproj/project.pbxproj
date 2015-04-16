@@ -14,6 +14,8 @@
 		D9A71C8B1ADF5F6500799E32 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9A71C8A1ADF5F6500799E32 /* Images.xcassets */; };
 		D9A71C8E1ADF5F6500799E32 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9A71C8C1ADF5F6500799E32 /* LaunchScreen.xib */; };
 		D9A71C9A1ADF5F6500799E32 /* BYTGithubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A71C991ADF5F6500799E32 /* BYTGithubTests.m */; };
+		D9A71CA41ADF5FA900799E32 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A71CA31ADF5FA900799E32 /* CFNetwork.framework */; };
+		E3E4D717B31F0E389068A4B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0A12EF6C532D429B1B4E /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9272D95AAABBFAB669D754A7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		BCBC0A12EF6C532D429B1B4E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE4674A5A86669D35E4810FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D9A71C7A1ADF5F6500799E32 /* BYTGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BYTGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A71C7E1ADF5F6500799E32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9A71C7F1ADF5F6500799E32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +45,7 @@
 		D9A71C931ADF5F6500799E32 /* BYTGithubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BYTGithubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A71C981ADF5F6500799E32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9A71C991ADF5F6500799E32 /* BYTGithubTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYTGithubTests.m; sourceTree = "<group>"; };
+		D9A71CA31ADF5FA900799E32 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A71CA41ADF5FA900799E32 /* CFNetwork.framework in Frameworks */,
+				E3E4D717B31F0E389068A4B9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +68,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9274AEB2F662E2AA105F7396 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BCBC0A12EF6C532D429B1B4E /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D9A71C711ADF5F6500799E32 = {
 			isa = PBXGroup;
 			children = (
+				D9A71CA31ADF5FA900799E32 /* CFNetwork.framework */,
 				D9A71C7C1ADF5F6500799E32 /* BYTGithub */,
 				D9A71C961ADF5F6500799E32 /* BYTGithubTests */,
 				D9A71C7B1ADF5F6500799E32 /* Products */,
+				DECE0C69E6F6CC298C30B4A4 /* Pods */,
+				9274AEB2F662E2AA105F7396 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,6 +138,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		DECE0C69E6F6CC298C30B4A4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9272D95AAABBFAB669D754A7 /* Pods.debug.xcconfig */,
+				BE4674A5A86669D35E4810FA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +154,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9A71C9D1ADF5F6500799E32 /* Build configuration list for PBXNativeTarget "BYTGithub" */;
 			buildPhases = (
+				EB62DA7194AB8328E80DEF61 /* Check Pods Manifest.lock */,
 				D9A71C761ADF5F6500799E32 /* Sources */,
 				D9A71C771ADF5F6500799E32 /* Frameworks */,
 				D9A71C781ADF5F6500799E32 /* Resources */,
+				529F0566F2CECCD6DD17C188 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -213,6 +243,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		529F0566F2CECCD6DD17C188 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB62DA7194AB8328E80DEF61 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D9A71C761ADF5F6500799E32 /* Sources */ = {
@@ -345,21 +408,25 @@
 		};
 		D9A71C9E1ADF5F6500799E32 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9272D95AAABBFAB669D754A7 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BYTGithub/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 			};
 			name = Debug;
 		};
 		D9A71C9F1ADF5F6500799E32 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE4674A5A86669D35E4810FA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BYTGithub/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 			};
 			name = Release;
 		};
@@ -416,6 +483,7 @@
 				D9A71C9F1ADF5F6500799E32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D9A71CA01ADF5F6500799E32 /* Build configuration list for PBXNativeTarget "BYTGithubTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +492,7 @@
 				D9A71CA21ADF5F6500799E32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
