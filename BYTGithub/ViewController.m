@@ -2,96 +2,129 @@
 //  ViewController.m
 //  BYTGithub
 //
-//  Created by 卢权 on 15/4/16.
-//  Copyright (c) 2015年 卢权. All rights reserved.
+//  Created by Pikdays on 15/4/16.
+//  License
+//  Copyright (c) 2015年 Pikdays. All rights reserved.
+//  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
 #import "ViewController.h"
 #import "TFHpple.h"
 
-@interface ViewController () <NSXMLParserDelegate>
+typedef NS_ENUM(NSUInteger, ProgramLanguage) {
+    ProgramLanguage_OC,
+    ProgramLanguage_Swift,
+};
+
+static NSString *const kBaseURLString = @"https://github.com";
+
+@interface ViewController () <NSXMLParserDelegate> {
+    ProgramLanguage language;
+    int star;
+}
 
 @end
 
 @implementation ViewController
 
+#pragma mark - 配置参数
+
+- (void)config {
+    language = ProgramLanguage_OC; // 设置编程语言
+    star = 5000; // 设置收藏数目
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSString *baseURLString = @"https://github.com";
-    
+
+    // 配置参数
+    [self config];
+
+    // 从网络上加载数据
+    [self loadDataFromWebRequest];
+}
+
+#pragma mark - 加载请求
+
+- (void)loadDataFromWebRequest {
     NSURL *requestUrl;
     NSString *tempString = @"";
-    
-    int outTime = 10;
+    int pageNumber = 0;    // 共多少页
 
-    for (int i = 1; i < 40; i++) {
+    for (int i = 1; i < 300; i++) {
         if (i == 1) {
-            requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", baseURLString, @"search?utf8=%E2%9C%93&q=language%3AObjective-C+stars%3A%3E1000&type=Repositories&ref=advsearch&l=Objective-C"]];
-            
+            requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/search?utf8=%%E2%%9C%%93&q=language%%3A%@+stars%%3A%%3E%d&type=Repositories&ref=advsearch&l=%@&l=", kBaseURLString, [self getLanguageName], star, [self getLanguageName]]];
         } else {
-            requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/search?l=Objective-C&amp;p=%d&amp;q=language%%3AObjective-C+stars%%3A%%3E1000&amp;ref=advsearch&amp;type=Repositories&amp;utf8=%%E2%%9C%%93", baseURLString, i]];
+            requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/search?l=&p=%d&q=language%%3A%@+stars%%3A%%3E%d&ref=advsearch&type=Repositories&utf8=%%E2%%9C%%93", kBaseURLString, i, [self getLanguageName], star]];
         }
 
         NSData *data = [NSData dataWithContentsOfURL:requestUrl];
         TFHpple *doc = [[TFHpple alloc] initWithHTMLData:data];
         NSArray *elements = [doc searchWithXPathQuery:@"//a"];
-        if (elements.count>0) {
-            NSLog(@"第%i页:requestUrl:%@\n\n", i, requestUrl);
+        if (elements.count > 0) {
+            NSLog(@"第%i页\trequestUrl:%@\n", i, requestUrl);
 
             for (TFHppleElement *element in elements) {
                 NSString *hrefStr = element.attributes[@"href"];
-                
-                if ([[hrefStr substringFromIndex:1] isEqualToString:element.text]) {
-                    
-                    // 库链接
-                    tempString = [tempString stringByAppendingString:[NSString stringWithFormat:@"git clone %@/%@.git; ", baseURLString,element.text]];
+                if (hrefStr.length > 1) {
+                    NSString *tt = [hrefStr substringFromIndex:1];
+                    if (tt.length > 0 && [tt isEqualToString:element.text]) {
+                        // 库链接
+                        tempString = [tempString stringByAppendingString:[NSString stringWithFormat:@"git clone %@/%@.git; ", kBaseURLString, element.text]];
+                    }
                 }
             }
-            NSLog(@"%@\n\n", [tempString substringWithRange:NSMakeRange(0, tempString.length-1)]);
-
             // 写入文件
             [self writeToFile:tempString];
+        } else {
+            i--;
         }
 
-        // 共多少页
-        NSArray *elements2 = [doc searchWithXPathQuery:@"//span[@class='counter']"];
-        if (elements2.count>0) {
-            TFHppleElement *counterElement = elements2[0];
-            int pageNumber = [counterElement.text intValue];
-            if ((pageNumber%10 == 0 ? (pageNumber/10): (pageNumber/10+1)) == i) {
-                return;
+        if (i == 1) {
+            NSArray *elements2 = [doc searchWithXPathQuery:@"//span[@class='counter']"];
+            if (elements2.count > 0) {
+                int count = [[elements2[0] text] intValue];
+                pageNumber = (count % 10 == 0 ? (count / 10) : (count / 10 + 1));
             }
+        } else if (pageNumber == i) {
+            [[[UIAlertView alloc] initWithTitle:@"请求完成" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+            return;
         }
-        
-        requestUrl = nil;
-        
-        sleep(outTime);
+
+        sleep(2);
     }
+}
+
+// 获取语言名字
+- (NSString *)getLanguageName {
+    NSString *languageName = @"";
+    switch (language) {
+        case ProgramLanguage_OC: {
+            languageName = @"Objective-C";
+        }
+            break;
+        case ProgramLanguage_Swift: {
+            languageName = @"Swift";
+        }
+            break;
+    }
+
+    return languageName;
 }
 
 // 将字符串写入文件中
 - (void)writeToFile:(NSString *)str {
     NSString *documentDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *filePath = [documentDirectory stringByAppendingPathComponent:@"Repositories.txt"];
+    NSString *filePath = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_star>=%d_Repositories.txt", [self getLanguageName], star]];
 
-    if (![[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
-        [[NSFileManager defaultManager]createFileAtPath:filePath contents:nil attributes:nil];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
     }
-    
+
     [str writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    
-    NSLog(@"文件路径：%@", filePath);
 
+    NSLog(@"%@文件路径：%@\n\n", [self getLanguageName], filePath);
 }
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end
 

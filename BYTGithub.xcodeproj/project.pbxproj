@@ -194,7 +194,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0630;
-				ORGANIZATIONNAME = "卢权";
+				ORGANIZATIONNAME = "Pikdays";
 				TargetAttributes = {
 					D9A71C791ADF5F6500799E32 = {
 						CreatedOnToolsVersion = 6.3;

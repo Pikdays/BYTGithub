@@ -2,8 +2,9 @@
 //  main.m
 //  BYTGithub
 //
-//  Created by 卢权 on 15/4/16.
-//  Copyright (c) 2015年 卢权. All rights reserved.
+//  Created by Pikdays on 15/4/16.
+//  Copyright (c) 2015年 Pikdays. All rights reserved.
+//  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
 #import <UIKit/UIKit.h>
