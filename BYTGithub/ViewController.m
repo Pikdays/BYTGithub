@@ -3,8 +3,8 @@
 //  BYTGithub
 //
 //  Created by Pikdays on 15/4/16.
-//  License
 //  Copyright (c) 2015年 Pikdays. All rights reserved.
+//  License
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
